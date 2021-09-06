@@ -1,10 +1,10 @@
+const { BadRequest } = require('http-errors');
+
 const validation = (schema) => {
-    validationFunc = (req,res,next) => {
+    validationFunc = (req, _, next) => {
         const { error } = schema.validate(req.body);
         if (error) {
-            return res.status(400).json({
-                message: error.message
-            });
+           throw new BadRequest()
         }
         next();
     }
