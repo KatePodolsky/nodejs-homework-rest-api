@@ -1,4 +1,4 @@
-const { Schema, SchemaTypes, model } = require("mongoose")
+const { Schema, model } = require("mongoose")
 const Joi = require("joi");
 
 const userSchema = Schema({
@@ -16,14 +16,10 @@ const userSchema = Schema({
         enum: ["starter", "pro", "business"],
         default: "starter"
     },
-    // token: {
-    //     type: String,
-    //     default: null,
-    // },
-    owner: {
-      type: SchemaTypes.ObjectId,
-      ref: 'user',
-    }
+    token: {
+        type: String,
+        default: null,
+    },
 }, { versionKey: false, timestamps: true });
 
 const joiUserSchema = Joi.object({

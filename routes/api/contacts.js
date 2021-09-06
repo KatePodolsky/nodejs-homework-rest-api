@@ -12,7 +12,7 @@ router.get('/',ctrl.getAll );
 
 router.get('/:contactId', ctrl.getById);
 
-router.post('/', validationMiddleware, ctrl.add);
+router.post('/', authenticate, validationMiddleware, ctrl.add);
 
 router.delete('/:contactId', ctrl.removeById);
 

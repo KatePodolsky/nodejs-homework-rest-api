@@ -16,13 +16,19 @@ const login = async (req, res, next) => {
     }
     
     const payload = {
-        id:user._id
+        id: user._id
     }
+ 
     const { SECRET_KEY } = process.env;
 
-    const token = jwt.sign(payload,SECRET_KEY)
+    const token = jwt.sign(payload, SECRET_KEY)
+    await User.findByIdAndUpdate(user._id, {token})
         res.json({
-            token
+            token:token,
+            User: {
+            email: user.email,
+            subscription: user.subscription
+        }
         })
 }
 
