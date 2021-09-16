@@ -1,9 +1,18 @@
 const { Contact } = require("../../models");
 
-const getAll = async (_, res, next) => {
+const getAll = async (req, res, next) => {
   try {
-    const contacts = await Contact.find({});
-    res.json({ contacts });
+    const { page = 1, limit = 20 } = req.query;
+    const skip = (page - 1) * limit;
+    const total = await Contact.estimatedDocumentCount();
+    const contacts = await Contact.find({},"",{skip, limit:+limit});
+    res.json({
+      data: {
+        total,
+        pages: Math.ceil(total / limit),
+        contacts
+      }
+     });
   }
   catch (error) {
     next(error);
