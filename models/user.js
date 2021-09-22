@@ -23,16 +23,24 @@ const userSchema = Schema({
     avatarURL:{
         type: String,
         default:""
-    }
+    },
+    verify: {
+    type: Boolean,
+    default: false,
+  },
+    verifyToken: {
+    type: String,
+    required: [true, 'Verify token is required'],
+  },
 }, { versionKey: false, timestamps: true });
 
 const joiUserSchema = Joi.object({
-    password: Joi.string()
-        .required(),
+    password: Joi.string(),
     email: Joi.string()
         .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
     subscription: Joi.string(),
-    avatarURL:Joi.string(),
+    avatarURL: Joi.string(),
+   
 });
 
 const User = model("user", userSchema);
